@@ -1,6 +1,7 @@
 package br.com.fiap.connectionsolutions_ia.endereco;
 
 
+import br.com.fiap.connectionsolutions_ia.validation.TipoEndereco;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

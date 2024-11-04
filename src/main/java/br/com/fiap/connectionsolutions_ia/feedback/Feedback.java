@@ -1,6 +1,7 @@
 package br.com.fiap.connectionsolutions_ia.feedback;
 
 
+import br.com.fiap.connectionsolutions_ia.cliente.Cliente;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
