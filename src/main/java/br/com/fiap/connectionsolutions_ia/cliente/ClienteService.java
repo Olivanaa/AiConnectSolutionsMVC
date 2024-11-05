@@ -17,9 +17,15 @@ import java.util.List;
 @Service
 public class ClienteService {
 
-    ClienteRepository clienteRepository;
-    EnderecoService enderecoService;
-    InteresseService interesseService;
+    private final ClienteRepository clienteRepository;
+    private final EnderecoService enderecoService;
+    private final InteresseService interesseService;
+
+    public ClienteService(ClienteRepository clienteRepository, EnderecoService enderecoService, InteresseService interesseService) {
+        this.clienteRepository = clienteRepository;
+        this.enderecoService = enderecoService;
+        this.interesseService = interesseService;
+    }
 
     @Transactional
     public Cliente criar(@Valid ClienteFormRequest clienteForm){

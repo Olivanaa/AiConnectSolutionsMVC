@@ -23,11 +23,11 @@ public class Interesse {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
-    @Size(min=5, max=500)
+    @NotBlank(message = "{campo.obrigatorio}")
+    @Size(min=5, max=500, message = "{tamanho.campo}")
     private String descricao;
 
-    @NotNull
+    @NotNull(message = "{campo.obrigatorio}")
     @PastOrPresent
     private LocalDate dtInteracao;
 }

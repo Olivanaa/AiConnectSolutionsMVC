@@ -15,8 +15,13 @@ import java.util.List;
 @Service
 public class LeadService {
 
-    LeadRepository leadRepository;
-    InteresseService interesseService;
+    private final LeadRepository leadRepository;
+    private final InteresseService interesseService;
+
+    public LeadService(LeadRepository leadRepository, InteresseService interesseService) {
+        this.leadRepository = leadRepository;
+        this.interesseService = interesseService;
+    }
 
     @Transactional
     public Lead criar(@Valid LeadFormRequest leadForm){

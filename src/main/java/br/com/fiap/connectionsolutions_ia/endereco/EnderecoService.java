@@ -12,7 +12,11 @@ import java.util.List;
 @Service
 public class EnderecoService {
 
-    EnderecoRepository enderecoRepository;
+    private final EnderecoRepository enderecoRepository;
+
+    public EnderecoService(EnderecoRepository enderecoRepository) {
+        this.enderecoRepository = enderecoRepository;
+    }
 
     public Endereco criar(@Valid Endereco endereco){
         return enderecoRepository.save(endereco);

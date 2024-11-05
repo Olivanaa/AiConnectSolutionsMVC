@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS endereco (
     bairro VARCHAR(255) NOT NULL,
     cidade VARCHAR(255) NOT NULL,
     estado VARCHAR(255) NOT NULL,
-    pais VARCHAR(255) NOT NULL,
     cep VARCHAR(20) NOT NULL,
     tipo VARCHAR(255) NOT NULL
 );

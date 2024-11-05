@@ -23,38 +23,38 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
-    @Size(min=3, max= 200)
+    @NotBlank(message = "{campo.obrigatorio}")
+    @Size(min=3, max= 200, message = "{tamanho.campo}")
     private String nome;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "{campo.obrigatorio}")
+    @Email(message = "{email.invalido}")
     private String email;
 
-    @NotBlank
-    @Size(min=10, max=11)
+    @NotBlank(message = "{campo.obrigatorio}")
+    @Size(min=10, max=11, message = "{tamanho.telefone}")
     private String telefone;
 
-    @NotNull
+    @NotNull(message = "{campo.obrigatorio}")
     @Past
     private LocalDate dtaNascimento;
 
-    @NotNull
+    @NotNull(message = "{campo.obrigatorio}")
     @PastOrPresent
     private LocalDate dtaCadastro;
 
-    @NotBlank
-    @Size(min=3, max=50)
+    @NotBlank(message = "{campo.obrigatorio}")
+    @Size(min=3, max=50, message = "{tamanho.campo}")
     private String segmentoMercado;
 
-    @NotNull
+    @NotNull(message = "{campo.obrigatorio}")
     @PastOrPresent
     private LocalDate dtaUltimaInteracao;
 
-    @ManyToOne
+    @OneToOne
     private Endereco endereco;
 
-    @ManyToOne
+    @OneToOne
     private Interesse interesse;
 
 }

@@ -12,7 +12,11 @@ import java.util.List;
 @Service
 public class InteresseService {
 
-    InteresseRepository interesseRepository;
+    private final InteresseRepository interesseRepository;
+
+    public InteresseService(InteresseRepository interesseRepository) {
+        this.interesseRepository = interesseRepository;
+    }
 
     public Interesse criar(@Valid Interesse interesse){
         return interesseRepository.save(interesse);
