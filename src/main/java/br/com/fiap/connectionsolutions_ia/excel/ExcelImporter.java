@@ -7,43 +7,25 @@ import br.com.fiap.connectionsolutions_ia.endereco.Endereco;
 import br.com.fiap.connectionsolutions_ia.endereco.EnderecoRepository;
 import br.com.fiap.connectionsolutions_ia.interesse.Interesse;
 import br.com.fiap.connectionsolutions_ia.interesse.InteresseRepository;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Configuration
 public class ExcelImporter {
@@ -210,17 +192,38 @@ public class ExcelImporter {
 
     public void salvarClientes(List<Cliente> clientes) {
         for (Cliente cliente : clientes) {
-            Endereco endereco = cliente.getEndereco();
-            Interesse interesse = cliente.getInteresse();
-            if (endereco != null) {
-                cliente.setEndereco(enderecoRepository.save(endereco));
+            try {
+                Endereco endereco = cliente.getEndereco();
+                Interesse interesse = cliente.getInteresse();
+
+                if (endereco != null) {
+                    cliente.setEndereco(enderecoRepository.save(endereco));
+                }
+                if (interesse != null) {
+                    cliente.setInteresse(interesseRepository.save(interesse));
+                }
+
+                clienteRepository.save(cliente);
+
+            } catch (ConstraintViolationException e) {
+                for (ConstraintViolation<?> violation : e.getConstraintViolations()) {
+                    String message = String.format("Erro no campo %s: %s",
+                            violation.getPropertyPath(), violation.getMessage());
+                    importErrors.add(new ImportError(clientes.indexOf(cliente) + 1, message));
+                }
+
+            } catch (DataIntegrityViolationException e) {
+                String message = "Erro de integridade de dados: " + e.getMessage();
+                importErrors.add(new ImportError(clientes.indexOf(cliente) + 1, message));
+
+            } catch (Exception e) {
+                String message = "Erro inesperado ao salvar cliente: " + e.getMessage();
+                importErrors.add(new ImportError(clientes.indexOf(cliente) + 1, message));
             }
-            if (interesse != null) {
-                cliente.setInteresse(interesseRepository.save(interesse));
-            }
-            clienteRepository.save(cliente);
         }
     }
+
+
 
     private String getCellValueAsString(Cell cell) {
         if (cell == null) return "";

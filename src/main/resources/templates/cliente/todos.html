@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Leads</title>
+    <title>Clientes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 </head>
 <body>
 
 <div class="container mt-5">
-    <h1>Lista de Leads</h1>
+    <h1>Lista de Clientes</h1>
 
     <table class="table table-bordered">
         <thead>
@@ -16,20 +16,28 @@
             <th>Nome</th>
             <th>Email</th>
             <th>Telefone</th>
-            <th>Data de Interação</th>
+            <th>Data de Nascimento</th>
+            <th>Data de Cadastro</th>
+            <th>Data da Última Interação</th>
+            <th>Segmento de Mercado</th>
             <th>Interesse</th>
+            <th>Estado</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="lead : ${leads}">
-            <td th:text="${lead.nome}"></td>
-            <td th:text="${lead.email}"></td>
-            <td th:text="${lead.telefone}"></td>
-            <td th:text="${lead.dtInteracao}"></td>
-            <td th:text="${lead.interesse.descricao}"></td>
+        <tr th:each="cliente : ${clientes}">
+            <td th:text="${cliente.nome}"></td>
+            <td th:text="${cliente.email}"></td>
+            <td th:text="${cliente.telefone}"></td>
+            <td th:text="${cliente.dtaNascimento}"></td>
+            <td th:text="${cliente.dtaCadastro}"></td>
+            <td th:text="${cliente.dtaUltimaInteracao}"></td>
+            <td th:text="${cliente.segmentoMercado}"></td>
+            <td th:text="${cliente.interesse.descricao}"></td>
+            <td th:text="${cliente.endereco.estado}"></td>
         </tr>
-        <tr th:if="${#lists.isEmpty(leads)}">
-            <td colspan="5">Nenhum lead encontrado.</td>
+        <tr th:if="${#lists.isEmpty(clientes)}">
+            <td colspan="9">Nenhum cliente encontrado.</td>
         </tr>
         </tbody>
     </table>
