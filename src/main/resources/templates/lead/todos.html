@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Data de Interação</th>
+        <th>Interesse</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="lead : ${leads}">
+        <td th:text="${lead.nome}"></td>
+        <td th:text="${lead.email}"></td>
+        <td th:text="${lead.telefone}"></td>
+        <td th:text="${lead.dtInteracao}"></td>
+        <td th:text="${lead.interesse.descricao}"></td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(leads)}">
+        <td colspan="5">Nenhum lead encontrado.</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

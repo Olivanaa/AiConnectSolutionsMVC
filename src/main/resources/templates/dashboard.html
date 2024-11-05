@@ -19,34 +19,30 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Nome</th>
             <th>Email</th>
             <th>Telefone</th>
-            <th>Data de Nascimento</th>
-            <th>Data de Cadastro</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="cliente : ${clientes}">
-            <td th:text="${cliente.id}"></td>
             <td th:text="${cliente.nome}"></td>
             <td th:text="${cliente.email}"></td>
             <td th:text="${cliente.telefone}"></td>
-            <td th:text="${cliente.dtaNascimento}"></td>
-            <td th:text="${cliente.dtaCadastro}"></td>
         </tr>
         <tr th:if="${#lists.isEmpty(clientes)}">
             <td colspan="6">Nenhum cliente encontrado.</td>
         </tr>
         </tbody>
     </table>
+    <div class="mb-3">
+        <a th:href="@{/cliente/todos}" class="btn btn-info">Carregar Todos os Clientes</a>
+    </div>
 
     <h2>Leads</h2>
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Nome</th>
             <th>Email</th>
             <th>Telefone</th>
@@ -55,7 +51,6 @@
         </thead>
         <tbody>
         <tr th:each="lead : ${leads}">
-            <td th:text="${lead.id}"></td>
             <td th:text="${lead.nome}"></td>
             <td th:text="${lead.email}"></td>
             <td th:text="${lead.telefone}"></td>
@@ -66,6 +61,9 @@
         </tr>
         </tbody>
     </table>
+    <div class="mb-3">
+        <a th:href="@{/lead/todos}" class="btn btn-info">Carregar Todos os Leads</a>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

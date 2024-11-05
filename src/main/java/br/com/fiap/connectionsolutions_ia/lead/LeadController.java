@@ -1,5 +1,6 @@
 package br.com.fiap.connectionsolutions_ia.lead;
 
+import br.com.fiap.connectionsolutions_ia.cliente.Cliente;
 import br.com.fiap.connectionsolutions_ia.cliente.dto.ClienteFormRequest;
 import br.com.fiap.connectionsolutions_ia.endereco.dto.EnderecoFormRequest;
 import br.com.fiap.connectionsolutions_ia.enums.TipoEnderecoEnum;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/lead")
@@ -42,6 +45,13 @@ public class LeadController {
         log.info("Tipo de endereço recebido: {}", leadForm.interesse().toModel().getDescricao());
         leadService.criar(leadForm);
         return "redirect:/dashboard";
+    }
+
+    @GetMapping("/todos")
+    public String exibirTodosLead(Model model) {
+        List<Lead> leads = leadService.buscarTodos();
+        model.addAttribute("leads", leads);
+        return "lead/todos";
     }
 
 

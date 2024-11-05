@@ -4,6 +4,7 @@ import br.com.fiap.connectionsolutions_ia.cliente.dto.ClienteFormRequest;
 import br.com.fiap.connectionsolutions_ia.endereco.dto.EnderecoFormRequest;
 import br.com.fiap.connectionsolutions_ia.enums.TipoEnderecoEnum;
 import br.com.fiap.connectionsolutions_ia.excel.ExcelImporter;
+import br.com.fiap.connectionsolutions_ia.excel.ImportError;
 import br.com.fiap.connectionsolutions_ia.interesse.dto.InteresseFormRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -72,14 +73,27 @@ public class ClienteController {
 
         try {
             List<Cliente> clientesImportados = excelImporter.importarClientes(arquivoExcel);
-            model.addAttribute("clientesImportados", clientesImportados);
-            model.addAttribute("mensagemSucesso", "Clientes importados com sucesso!");
+
+            List<ImportError> errosImportacao = excelImporter.getImportErrors();
+            if (!errosImportacao.isEmpty()) {
+                model.addAttribute("errosImportacao", errosImportacao);
+                model.addAttribute("mensagemErro", "Alguns clientes não foram importados devido a erros.");
+            } else if (!clientesImportados.isEmpty()) {
+                model.addAttribute("mensagemSucesso", "Clientes importados com sucesso!");
+            }
+
         } catch (IOException e) {
             model.addAttribute("mensagemErro", "Erro ao importar clientes do Excel: " + e.getMessage());
             return "cliente/importar";
         }
 
-        return "redirect:/cliente/adicionar";
+        return "cliente/importar";
     }
 
+    @GetMapping("/todos")
+    public String exibirTodosClientes(Model model) {
+        List<Cliente> clientes = clienteService.buscarTodas();
+        model.addAttribute("clientes", clientes);
+        return "cliente/todos";
+    }
 }

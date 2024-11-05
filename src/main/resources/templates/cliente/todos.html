@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Leads</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1>Lista de Leads</h1>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Data de Interação</th>
+            <th>Interesse</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="lead : ${leads}">
+            <td th:text="${lead.nome}"></td>
+            <td th:text="${lead.email}"></td>
+            <td th:text="${lead.telefone}"></td>
+            <td th:text="${lead.dtInteracao}"></td>
+            <td th:text="${lead.interesse.descricao}"></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(leads)}">
+            <td colspan="5">Nenhum lead encontrado.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
